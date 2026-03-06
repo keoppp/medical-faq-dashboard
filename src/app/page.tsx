@@ -16,7 +16,7 @@ import { Activity, LogOut, Building2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
-    const { data, isLoading, isError, incrementViewCount, logActivity, isHighInquiryRisk } = useFAQData();
+    const { data, isLoading, isError, incrementViewCount, logActivity } = useFAQData();
     const { branchName, logout } = useAuth();
     const router = useRouter();
     const [selectedCategory, setSelectedCategory] = useState("All");
@@ -85,7 +85,7 @@ export default function Dashboard() {
         );
     }
 
-    if (!isLoading && !data) return null;
+    // Removed data null check because data is initialized as an object
 
     const isBentoGridState = searchQuery === "" && selectedCategory === "All";
     const top10 = getTop10Faqs();
@@ -165,7 +165,6 @@ export default function Dashboard() {
                                                         config={data!.config}
                                                         onFaqClick={handleFaqClick}
                                                         isTopRanking={true}
-                                                        isHighInquiryRisk={isHighInquiryRisk}
                                                     />
                                                 </div>
                                             </div>
@@ -185,7 +184,6 @@ export default function Dashboard() {
                                                         faqs={filteredFaqs}
                                                         config={data!.config}
                                                         onFaqClick={handleFaqClick}
-                                                        isHighInquiryRisk={isHighInquiryRisk}
                                                     />
                                                 ) : (
                                                     <EmptyState config={data?.config} />

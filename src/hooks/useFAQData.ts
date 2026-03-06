@@ -23,10 +23,12 @@ export interface GuideItem {
 }
 
 export interface NewsItem {
-    id: string;
+    id: string | number;
     Date: string;
     Content: string;
-    Type: 'info' | 'alert' | 'update';
+    Type: 'info' | 'alert' | 'update' | string;
+    Category?: string; // 重要、運営など
+    Title?: string;
 }
 
 export interface DashboardConfig {
@@ -44,7 +46,17 @@ export interface DashboardData {
 }
 
 export function useFAQData() {
-    const [data, setData] = useState<DashboardData | null>(null);
+    const [data, setData] = useState<DashboardData>({
+        faqs: [],
+        guides: [],
+        news: [],
+        config: {
+            Top10ResetDays: 7,
+            EmergencyPhone: "03-1234-5678",
+            MaintenanceMessage: "現在システムメンテナンス中です。",
+            SupportEmail: "kento170315@icloud.com"
+        }
+    });
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
 
@@ -63,8 +75,10 @@ export function useFAQData() {
                 }
 
                 setData({
-                    ...json,
-                    guides: json.guides || [] // Guideがundefinedの場合も空配列にする
+                    faqs: json.faqs || [],
+                    guides: json.guides || [],
+                    news: json.news || [],
+                    config: json.config
                 });
             } catch (error) {
                 console.error("Dashboard data fetch failed:", error);
@@ -119,24 +133,11 @@ export function useFAQData() {
         }
     }, []);
 
-    // バックエンド側計算ロジック自体は保持
-    const getInquiryScore = useCallback((faq: FAQItem): number => {
-        const views = typeof faq.Weekly_Views === 'string' ? parseInt(faq.Weekly_Views, 10) : (faq.Weekly_Views || 0);
-        const weight = faq.Inquiry_Weight || 0;
-        return views * weight;
-    }, []);
-
-    const isHighInquiryRisk = useCallback((faq: FAQItem): boolean => {
-        return getInquiryScore(faq) >= 500;
-    }, [getInquiryScore]);
-
     return {
         data,
         isLoading,
         isError,
         incrementViewCount,
         logActivity,
-        getInquiryScore,
-        isHighInquiryRisk,
     };
 }

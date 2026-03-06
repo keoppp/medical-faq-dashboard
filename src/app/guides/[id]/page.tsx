@@ -179,8 +179,7 @@ export default function GuidePage() {
                                     <div className="w-10 h-10 rounded-full bg-gray-50 group-hover:bg-white flex items-center justify-center mb-4 transition-colors">
                                         <Search className="w-5 h-5 text-gray-600 group-hover:text-teal-600" />
                                     </div>
-                                    <span className="text-[12px] font-bold text-gray-400 mb-1">解決しなかった場合は？</span>
-                                    <span className="text-[15px] font-semibold text-gray-900 group-hover:text-teal-700">FAQ検索に戻る</span>
+                                    <span className="text-[15px] font-semibold text-gray-900 group-hover:text-teal-700">FAQで再検索する</span>
                                 </Link>
 
                                 {/* Flow 2: Mail Support */}
@@ -188,8 +187,7 @@ export default function GuidePage() {
                                     <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mb-4 shadow-sm">
                                         <Mail className="w-5 h-5 text-gray-600 group-hover:text-emerald-600" />
                                     </div>
-                                    <span className="text-[12px] font-bold text-gray-400 mb-1">それでも不明な点は？</span>
-                                    <span className="text-[15px] font-semibold text-gray-900 group-hover:text-emerald-700">サポートに問い合わせる</span>
+                                    <span className="text-[15px] font-semibold text-gray-900 group-hover:text-emerald-700">管理者へ直接問い合わせる</span>
                                 </a>
                             </div>
                         </div>

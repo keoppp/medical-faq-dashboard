@@ -1,5 +1,5 @@
 import { FAQItem, DashboardConfig } from "@/hooks/useFAQData";
-import { ChevronRight, TrendingUp, Phone } from "lucide-react";
+import { ChevronRight, TrendingUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface FAQListProps {
@@ -7,8 +7,6 @@ interface FAQListProps {
     config: DashboardConfig | undefined;
     onFaqClick: (faq: FAQItem) => void;
     isTopRanking?: boolean;
-    // UI非表示要件のため、isHighInquiryRisk プロパティ自体はオプションとして残すか（影響範囲を小さくするため）
-    isHighInquiryRisk?: (faq: FAQItem) => boolean;
 }
 
 const isRecentlyUpdated = (updatedAtStr: string | undefined, configDays: number) => {
@@ -28,8 +26,6 @@ export function FAQList({ faqs, config, onFaqClick, isTopRanking = false }: FAQL
                     const isFresh = config ? isRecentlyUpdated(faq.Updated_At, config.Top10ResetDays) : false;
                     const views = typeof faq.Weekly_Views === 'string' ? parseInt(faq.Weekly_Views, 10) : faq.Weekly_Views;
 
-                    // UIから「受電注意」バッジの該当DOMをすべて削除しています。
-
                     return (
                         <motion.div
                             layout="position"
@@ -43,7 +39,6 @@ export function FAQList({ faqs, config, onFaqClick, isTopRanking = false }: FAQL
                                 onClick={() => onFaqClick(faq)}
                                 className="group flex items-center gap-5 py-5 cursor-pointer transition-colors duration-200 hover:bg-gray-50 -mx-4 px-4 rounded-xl"
                             >
-                                {/* Content */}
                                 <div className="flex-1 min-w-0 flex flex-col gap-2">
                                     <div className="flex items-center gap-2 flex-wrap">
                                         <span className="text-[12px] font-medium text-teal-700 bg-teal-50 px-2.5 py-1 rounded-full">
@@ -55,7 +50,6 @@ export function FAQList({ faqs, config, onFaqClick, isTopRanking = false }: FAQL
                                                 急上昇
                                             </span>
                                         )}
-                                        {/* 受電注意の span は削除済み */}
                                         <span className="text-[12px] text-gray-300 ml-auto">
                                             {views} 閲覧
                                         </span>
@@ -72,8 +66,6 @@ export function FAQList({ faqs, config, onFaqClick, isTopRanking = false }: FAQL
                                         </span>
                                     )}
                                 </div>
-
-                                {/* Arrow */}
                                 <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-gray-600 transition-all shrink-0 group-hover:translate-x-1" strokeWidth={1.5} />
                             </div>
                         </motion.div>

@@ -26,12 +26,12 @@ export function ManualLibrary({ guides = [] }: ManualLibraryProps) {
                 </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-8 pt-2 -mx-6 px-6 lg:-mx-12 lg:px-12 scrollbar-hide">
                 {guides.map((guide, i) => {
                     const IconComponent = iconComponentMap[guide.Icon] || BookOpen;
 
                     return (
-                        <Link key={guide.id} href={`/guides/${guide.id}`}>
+                        <Link key={guide.id} href={`/guides/${guide.id}`} className="shrink-0 w-[260px] sm:w-[320px] snap-start">
                             <motion.div
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
