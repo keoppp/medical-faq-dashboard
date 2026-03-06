@@ -7,6 +7,7 @@ interface FAQListProps {
     config: DashboardConfig | undefined;
     onFaqClick: (faq: FAQItem) => void;
     isTopRanking?: boolean;
+    // UI非表示要件のため、isHighInquiryRisk プロパティ自体はオプションとして残すか（影響範囲を小さくするため）
     isHighInquiryRisk?: (faq: FAQItem) => boolean;
 }
 
@@ -17,7 +18,7 @@ const isRecentlyUpdated = (updatedAtStr: string | undefined, configDays: number)
     return (now - updatedAt) / (1000 * 60 * 60 * 24) <= configDays;
 };
 
-export function FAQList({ faqs, config, onFaqClick, isTopRanking = false, isHighInquiryRisk }: FAQListProps) {
+export function FAQList({ faqs, config, onFaqClick, isTopRanking = false }: FAQListProps) {
     if (faqs.length === 0) return null;
 
     return (
@@ -26,7 +27,8 @@ export function FAQList({ faqs, config, onFaqClick, isTopRanking = false, isHigh
                 {faqs.map((faq, index) => {
                     const isFresh = config ? isRecentlyUpdated(faq.Updated_At, config.Top10ResetDays) : false;
                     const views = typeof faq.Weekly_Views === 'string' ? parseInt(faq.Weekly_Views, 10) : faq.Weekly_Views;
-                    const highRisk = isHighInquiryRisk ? isHighInquiryRisk(faq) : false;
+
+                    // UIから「受電注意」バッジの該当DOMをすべて削除しています。
 
                     return (
                         <motion.div
@@ -53,12 +55,7 @@ export function FAQList({ faqs, config, onFaqClick, isTopRanking = false, isHigh
                                                 急上昇
                                             </span>
                                         )}
-                                        {highRisk && (
-                                            <span className="text-[11px] font-semibold text-orange-700 bg-orange-50 border border-orange-200 px-2 py-0.5 rounded-full flex items-center gap-1">
-                                                <Phone className="w-3 h-3" strokeWidth={2} />
-                                                受電注意
-                                            </span>
-                                        )}
+                                        {/* 受電注意の span は削除済み */}
                                         <span className="text-[12px] text-gray-300 ml-auto">
                                             {views} 閲覧
                                         </span>

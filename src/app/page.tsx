@@ -150,7 +150,7 @@ export default function Dashboard() {
                                     <motion.div key="content" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}>
                                         {isBentoGridState ? (
                                             <div className="flex flex-col gap-12">
-                                                <ManualLibrary manuals={data!.manuals} />
+                                                <ManualLibrary guides={data!.guides} />
                                                 <NewsTicker news={data!.news} />
                                                 <div>
                                                     <h2 className="text-[22px] font-bold text-gray-900 tracking-tight mb-1">
